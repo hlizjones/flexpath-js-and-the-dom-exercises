@@ -1,7 +1,13 @@
 /*
 Exercise 9: Removing an Event Listener
-Description: Add an event listener to the button with ID alert-button that shows an alert when clicked. 
-Then, remove the event listener so that clicking the button no longer shows the alert after 5 seconds.
+
+Description: 
+
+Add an event listener to the button with ID 'alert-button' that 
+shows an alert when clicked. 
+
+Then, remove the event listener so that clicking the button no longer 
+shows the alert after 5 seconds.
 */
 
 // Exercise 9
