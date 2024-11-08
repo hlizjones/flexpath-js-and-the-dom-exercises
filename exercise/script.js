@@ -5,6 +5,7 @@ Description: Select the element with the ID main-title and change its text conte
 
 // Exercise 1
 const mainTitle = document.getElementById("main-title");
+console.log(mainTitle);
 mainTitle.textContent = "Welcome to the DOM Manipulation Page";
 
 /*
@@ -61,7 +62,7 @@ Description: Assume there's an image with ID main-image in your HTML. Change its
 
 // Exercise 7
 const mainImage = document.getElementById("main-image");
-mainImage.setAttribute("src", "image2.jpg");
+mainImage.setAttribute("src", "image2.png");
 
 /*
 Exercise 8: Adding an Event Listener
