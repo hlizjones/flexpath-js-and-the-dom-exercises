@@ -11,7 +11,7 @@ user moves the mouse over the <header> element.
 const header = document.querySelector("header");
 
 header.addEventListener("mouseover", function () {
-  document.body.style.backgroundColor = "#f0f0f0";
+  document.body.style.backgroundColor = "red";
 });
 
 header.addEventListener("mouseout", function () {
