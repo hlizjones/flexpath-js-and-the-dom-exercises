@@ -13,6 +13,8 @@ let placeholder = `Delete this
 									code 
 									here`;
 
+console.log("Making a change!");
+
 /*
 Exercise 2: Accessing Elements with querySelector
 

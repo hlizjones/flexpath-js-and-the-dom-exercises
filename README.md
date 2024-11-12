@@ -17,9 +17,12 @@ the Document Object Model (DOM) of a webpage using JavaScript.
 3. You will write your JavaScript code in `exercise.js`. Any time you make a 
    change, save the file and then refresh the webpage displaying your .html web
    page in the browser.
-   
-   We have included a video showing how to do this.
 
+   We have included a video `js-and-the-dom.mp4` showing how to do this.
+
+   Exercise instructions are provided to you as code comments in the `exercises.js`
+   file.
+   
 
 Exercise solutions are in the `/solution` folder
 
