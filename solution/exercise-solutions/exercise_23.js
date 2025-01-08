@@ -17,3 +17,24 @@ window.addEventListener("resize", function () {
     console.log("Window size:", window.innerWidth, "x", window.innerHeight);
   }, 500);
 });
+
+window.addEventListener(
+	"resize",
+	debounce(logWidth)
+);
+
+function debounce (callback) {
+	let timer;
+	return function() {
+	clearTimeout(timer);
+	timer = setTimeout(() => {
+		callback()
+	}, 500);
+}
+};
+
+debounce = debounce(logWidth)
+
+function logWidth () {
+	console.log(`End of resizing: ${window.innerWidth} x ${window.innerHeight}`)
+};

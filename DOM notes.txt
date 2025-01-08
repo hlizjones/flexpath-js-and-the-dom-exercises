@@ -1,0 +1,366 @@
+DOM: Document Object Model
+    Data model -> Tree-like structure that represents the structure/content of a webpage
+
+DOM API:
+    Provided by broswers
+    Set of interfaces used in JS to access and interact with the DOM
+
+https://www.reddit.com/r/Frontend/comments/kxrmd6/browser_dom_vs_dom_api_any_difference/?rdt=46465
+https://stackoverflow.com/questions/39652659/why-is-the-dom-itself-referred-to-as-an-api
+
+
+Terminology:
+    Node: Represents one thing in the treelike structure
+    Attributes: Used in HTML (ex: to style CSS)
+    Properties: JS Properties -> not necessarily matching attribute (ex: innerHTML JS property is not a HTML attribute)
+
+Working w/ the DOM:
+
+    Access nodes in DOM:
+        getElementById(): unique to one element/node
+        getElementsbyTagName(): can return mult elements/nodes; will return array with elements
+            ex: getElementsbyTagName("p")
+        getElementsbyClassName(): returns elements with that class -> even if they have other classes
+        querySelector(): returns first node that matches in tree structure
+            can use element name, id(#myid), class(.myclass), and combos(div p, div> p, etc)
+            ex: querySelector("p")
+        querySelectorAll(): returns all matching nodes
+
+    Navigating the DOM:
+        navigate DOM chart
+        if only one child -> child is firstChild and lastChild
+        can use relationships as properties:
+            ex: document.querySelector("footer").childNodes[1].innerHTML
+                -> [index] so in this example it would pull the first child node
+
+ Changing DOM elements:
+        TEXT:
+            el.innerHTML=""; writes both text and markup
+            el.innerText=""; uses special characters as text instead of markup elements (HTML)
+                returns visible text content & formatted/styled text content.
+            el.textContent=""; uses special characters as text instead of markup elements (HTML)
+                returns all text and nested elements, regardless visibility & returns the raw text content as a string (no style/formatting)
+            el.firstChild.nodeValue=""; property of text node -> if a n element contains text then that text is a text node (it's also the element's child element)
+
+                            ->
+
+            innerHTML parses content as HTML, so it takes longer.
+            nodeValue uses straight text, does not parse HTML, and is faster.
+            textContent uses straight text, does not parse HTML, and is faster.
+            innerText Takes styles into consideration. It won't get hidden text for instance.
+
+                            ->
+
+            EX:
+                .textContent outputs text/plain while .innerHTML outputs text/html.
+
+                    Quick example:
+
+                    var example = document.getElementById('exampleId');
+
+                    example.textContent = '<a href="https://google.com">google</a>';
+
+                        output: <a href="http://google.com">google</a>
+
+                    example.innerHTML = '<a href="https://google.com">google</a>';
+
+                        output: google
+
+                1st output of type text/plain is not parsed by the browser and results in the full content displaying
+                2nd output of type text/html tells the browser to parse it before displaying it
+
+        ATTRIBUTES:
+            el.setAttribute("name","value"); name of attribute and value you want it set to
+            el.getAttribute("name","value"); retrieves attribute but does not change it
+
+        CSS:
+            Use style attribute: 
+                el.setAttribute("style", "color: orange");
+            Use syle property: cannot use dashes (background-color) with property
+                el.style.color = "orange";
+            classList property: adds class to element
+                el.classlist.add("my-orange")
+
+        DELETE:
+            Legacy:
+                nodename.parentNode.removeChild(nodename);
+
+                used this way to let parentNode know that childNode was gone
+
+            Modern:
+                nodename.remove();
+
+        BEST WAY TO UPDATE:
+            document.createElement()  
+                ex: document.createElement("p")  
+            document.createsTextNode()
+                ex: document.creatTextNode("Hannah")
+            el.appendChild(newnodename); adds childNode
+                ex: 
+                    let new_p = document.createElement("p");
+
+                    let new_p_text = document.createTextNode("Pluralsight");
+
+                    new_p.appendChild(new_p_text);
+
+        EXAMPLE ALL TOGETHER:
+
+            Copyright 2023 Globoticket
+
+            let placeholder = document. querySelector("footer div");    (gets footer element)
+
+            placeholder. childNodes [1]. textContent =                  (2023 to always be current year)
+            new Date().getFullYear();
+
+            placeholder. lastChild.remove();                            (removes Globoticket text)
+
+            let blank = document. createTextNode(" ");                  (created blank)
+            placeholder.appendChild(blank);                             (adds blank to footer as a child after 2023)
+
+            let a = document.createElement ("a");                       (creates a link element: <a></a>)
+            a.setAttribute("href", "./index.html");                     (sets link to ./index.html: <a href="./index.html"></a>)
+
+            let a_text = document.createTextNode("Globoticket");        (creates textNode that says Globolticket)
+
+            a.appendChild(a_text);                                      (adds Globolticket to link; the link text is a child of the link element: <a href="./index.html">Globolticket</a>)
+            placeholder.appendChild(a);                                 (adds link to footer as last child)
+
+Event Handling:
+
+    On click: 
+        onclick="function()" -> as attribute
+            <button type="button" onclick="function()"></button>    -> actually calling the function
+        .onclick -> as property
+            button.onclick=addToCart  -> referencing function; in script before function
+            button.onclick= { anonymousFunction() }  -> if function will be used exactly once
+
+    Event Listener:
+        el.addEventListener(
+            "name of event",
+            function                    (can also write anonymous function; e would be event argument since its an event handling function (e=event) -> (e) => { event handling code })
+        );
+
+            ex:
+
+            button.addEventListener(
+                "click".
+                addToCart);
+
+        Remove function:
+            el.removeEventListener(
+                "name of event",
+                function
+            );
+
+        Extra argument:
+            el.removeEventListener(
+                "name of event",
+                function,
+                {once: true}           (uses function once and then removes event listener)
+            );
+
+    Event arguments:
+        e.type: finds type of event (ex: click)
+        e.target: finds which element triggered event
+        event-specific properties (ie coordinates of where mouse clicked, which key clicked on keyboard)
+
+        Use case example:
+            Button is in a table
+            let row=e.target.parentNode.parentNode (e.target give us button clicked on in table, first parentNode give us table cell, seond parentNode gives us row)
+
+    Event bubbling:
+        browser "bubbles up" event through hierarchy -> parent elements handle event as well as the child element that triggered it
+            ex: if a <a> in a <p> is clicked, event bubbles up so <p> also receives click event
+        can be used to reduce repetive event listeners if event should affect the whole branch
+        use e.stopPropagation() on element bubbling should stop at
+            prevents event from bubbling up higher in the hierarchy but does not prevent other event handling functions at same level in the hierarchy from being triggered
+
+    Event capturing:
+        opposite of event bubbling
+
+    Prevent default behaviors: 
+        e.preventDefault()
+        ex: prevents shopping cart page from loading on click if there are no items in cart
+            document. querySelector ("a[href='./cart.html' ]").addEventListener(
+            "click",
+            (e) => {
+            let count = getCartItemCount();
+            if (count === 0) {
+            alert("Cart is empty!");
+            e.preventDefault();                 (need preventDefault() here; e is known argument for event in event handling functions)
+            }})
+
+    Waiting until the DOM is ready:
+        <head>
+            <script>
+            window.addEventlistener("load", () => {
+                    put code here
+            })
+            <script>
+        <head>
+        load events fires when full page is loaded
+        
+        without this, code would need to go at bottom of page below footer as not to run before page is loaded and encouter errors
+
+        document.addEventListener("DOMContentLoaded", () => { 
+            put code here
+        })
+        load event when all content is loaded -> okay if picture are not loaded
+
+Mouse Events:
+    mouseenter: enters elements
+    mousemove: moving over element
+    mouseleave: leaves element
+        these do not bubble up
+
+    mousedown: mouse button being held down
+    mouseup: release mouse button after being held down
+    click: mousedown and mouseup combined
+
+    Mouse event data/arguments:
+        clientX/clientY: x and y axis mouse event was fired on -. relative to the viewpoint
+        pageX/pageY: x and y axis mouse event was fired on -> relative to the document
+        screenX/screenY: x and y axis mouse event was fired on -> relative to the screen (fullsize screen)
+        offsetX/offsetY: x and y axis mouse event was fired on -> relative to target property of even argument -> coordinates of padding of target DOM element
+        button: button pressed on mouse  -> 0 is main button (usually left for right handed people), 2 second button (usually right), 3 is wheel
+        buttons: state of all buttons during event -> 0 is no buttons pressed, 1 is main button (usually left for right handed people), 2 second button (usually right), 4 is wheel
+        ctrlKey: Boolean value of whether ctrl was presseed why mouse event occured
+            ctrl and click ops up to new tab
+            other keys can be used (shift, alt, etc)
+
+    Drag&Drop:
+        Dragged item:
+            set draggable attribute to "true" on element that can be dragged 
+                ex: draggable="true"
+            add Event Listener "dragstart" with function to send data of that element to drag destination
+                el.addEventListener(
+                    "dragstart",
+                    (e) => e.dataTransfer.setData("text/plain", e.target.innerText)         (event argument has property called dataTransfer -> dataTransfer is object created by browser when drag event occurs that stores data through drag operation)
+                );                                                                          (setData stores data)
+                                                                                            (e.target.innerText -> innertext of element that is being dragged)
+
+                    syntax: (e) => e.dataTransfer.setData(format, data)
+
+                More on Data Transfer: https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
+       
+        Drag destination -> event listeners for mouse+mouse dragging something
+            cart.addEventListener(
+            "drageneter"                        (detects when dragged element enters target zone)
+            (e) => e.preventDefault()           (browser defaults to an error when something is dragged&dropped -> this prevents that default)
+            );
+            cart.addEventListener(
+            "dragover",                         (lets user see where element will be dropped -> visualization of elemnt is due to browser creating a drag preview automatically as prt of drag&drop functionality)
+            (e) => e.preventDefault()
+            );
+            cart.addEventListener(
+                "drop"
+                (e) => {
+                    e.preventDefault();
+                    
+                    const productName = e.dataTransfer.getData("text/plain");           (getData releases data; console.log just for example)
+
+                    const newItem = document.createElement("li");                       (Create a new list item for the cart)
+                    newItem.innerText = productName;
+
+                    cartItems.appendChild(newItem);                                     (Append the new item to the cart)
+                    });
+
+Keyboard Events:
+    keydown: a key has been pressed down
+    keypress: fired for digits, letters, punctuation but not special keys (shift, alt, ctrl) -> recommended to avoid using bc difficult w/ dif browsers
+    keyup: a key has been released
+
+    Event Data:
+        code: string representation of the hardware key -> the physical key no matter the keyboard -> 1st key if 3rd row of letters regardless if it's a Y (German) or Z (US)
+        key: value of the key -> Y regardless of where the key is on a keyboard
+
+            ex: 
+                document.addEventListener(
+                    "keyup",
+                    (e) => {
+                        if (e.key === "Z" && e.ctrlKey) {
+                            e.preventDefault();
+                            removefromCart();
+                        }
+                    }
+                )
+
+HTML Form Handling:
+    Accessing html form elements:
+        1)Using DOM method -> Preferred
+        2)Using forms property -> when DOM cannot be used
+            document.forms[0].elements[2]
+                forms property is array containing all forms on page -> 0 would be first form
+                elements property is all elements in that form -> 2 would be second element
+                -> best used when form isn't change (items aren't being added/removed to change index)
+            document.forms["my-form"].elements["my-element"]
+                use name attribute
+                -> best used when form is changed (idex is being changed)
+                -> forms/elements should have nams anyway to send ddata to server
+
+    Accessing HTML form element values (what user entered):
+        -for most fields (text, password, submit): value
+        -for select (dropdown):
+            -see all the text in options and whether option is selected: options
+            -give index of option selected (-1 for no element selected): selectedIndex
+            -contained value of selected option (does not work for lists where you can select mutl -> would have to iterate over each option): value
+        -for checkbox/radio
+            -see if its check: checked
+            -value of checkbox or radio button (not really useful): value
+
+    Preventing form submission: 
+        <form onsubmit="return false">          (prevents form submission forever by itself)
+
+        <form onsubmit="return checkForm(this)">        (this refers to form bc we are in the form element -> submits current form to checkForm function 
+                                                        -> checkForm function that we write can return false -> uses form onsubmit="return false" 
+                                                        -> but allows for dif conditions to be met with the use of a function)
+
+        form.onsubmit = (e) => {                         (must use onsumbit instead of click in case enter is used to sumit instead of mouse)
+        //logic to validate form                         (shorthand of form.addEventListener('submit', (e) => {}) this version has more flexibilities/capabilities)
+        e.preventDefault();
+        }
+        
+    Validate form:
+        Modern HTML has built-in validation (ie required) but use JS for complicated cases
+
+        ex: 
+            let f = document.getElementById("orderform");
+
+            function checkForm(e) {
+                if (f.elements["email"].value === "") {         (text example)
+                e.preventDefault();
+                } 
+
+                let continentSelected = false;                                          (radio example)
+                for (let i = 0; i < f.elements["continent"].length; i++) {
+                    if (f.elements["continent"] [i]. checked) {
+                    continentSelected = true;
+                    break;
+                    }
+                    }
+                if (!continentSelected) {
+                e.preventDefault();
+                }
+
+                let seatingSelected = false;                                            (select example)
+                for (let i = 0; i < f.elements["seating"]. options. length; i++) {
+                    if (f.elements["seating"]. options[i].selected) {
+                    seatingSelected = true;
+                    break;
+                    }
+                }
+                if (!seatingSelected) {
+                e.preventDefault() ;
+                }
+
+                if (!f.elements["tos"].checked)         (checkbox example)
+                e.preventDefault();
+            }
+
+            f.addEventListener("submit", checkForm);
+
+        Other Event Listeners:
+            input event is as soon as typing begins
+            change event is when user switches to another element (ie another field on the form)
+
+        Bootstrap has good validation code to add that turns fields red when invalid and green when valid

@@ -14,3 +14,13 @@ inputForm.addEventListener("submit", function (event) {
   const inputText = document.getElementById("input-text").value;
   console.log("Form submitted with:", inputText);
 });
+
+let form = document.querySelector("#input-form");
+form.addEventListener(
+	"submit",
+	(e) => {
+	e.preventDefault();
+	let input = document.querySelector("input-text").value;
+	console.log(input);
+	}
+);

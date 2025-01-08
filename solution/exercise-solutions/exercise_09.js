@@ -13,10 +13,11 @@ shows the alert after 5 seconds.
 */
 
 // Exercise 9
+const alertButton = document.getElementById("alert-button");
+
 function showAlert() {
   alert("Button Clicked!");
 }
-
 alertButton.addEventListener("click", showAlert);
 
 // Remove the event listener after 5 seconds

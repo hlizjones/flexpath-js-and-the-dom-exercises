@@ -25,3 +25,31 @@ dropTarget.addEventListener("drop", function (event) {
   const draggedElement = document.getElementById(data);
   dropTarget.appendChild(draggedElement);
 });
+
+let dragSource = document.querySelector("#drag-source");
+let dropTarget = document.querySelector("")
+
+dragSource.setAttribute("draggable", "true");
+
+dragSource.addEventListener(
+	"dragstart",
+	(e) => e.dataTransfer.setData("text/plain", e.target)
+);
+
+dropTarget.addEventListener(
+	"dragover",
+	(e) => e.preventDefault()
+);
+
+dropTarget.addEventListener(
+	"drageneter",
+	(e) => e.preventDefault()
+);
+
+dropTarget.addEventListener(
+	"drop",
+	(e) => { e.preventDefault()
+		let dropped = e.dataTransfer.getData("text/plain");
+		dropTarget.appendChild(dropped);
+	}
+);

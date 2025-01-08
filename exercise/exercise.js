@@ -13,7 +13,8 @@ let placeholder = `Delete this
 									code 
 									here`;
 
-console.log("Making a change!");
+let title = document.querySelector("#main-title");
+title.textContent = "Welcome to the DOM Manipulation Page";
 
 /*
 Exercise 2: Accessing Elements with querySelector
@@ -30,6 +31,9 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let introText= document.querySelector("p.intro-text");
+introText.style.color="blue";
+
 /*
 Exercise 3: Accessing Multiple Elements with querySelectorAll
 
@@ -44,6 +48,10 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+									
+let articleTexts = document.querySelectorAll(".article-text");
+articleTexts.forEach((currentEl) => {
+currentEl.setAttribute("style", "font-size: 18px")});
 
 /*
 Exercise 4: Navigating the DOM Tree
@@ -60,6 +68,9 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let parent = document.querySelector("#introduction").parentNode;
+console.log(parent);
+
 /*
 Exercise 5: Accessing Child Nodes
 
@@ -74,6 +85,10 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+let itemList = document.querySelector("#item-list");
+console.log(itemList.childElementCount);
+
 
 /*
 Exercise 6: Updating Inner HTML
@@ -90,6 +105,16 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let intro = document.querySelector("#introduction");
+let p = document.createElement("p");
+let text = document.createTextNode("This content has been updated!")
+p.appendChild(text);
+intro.appendChild(p);
+
+// Solution uses innerHTML
+// introSection.innerHTML += "<p>This content has been updated!</p>";
+
+
 /*
 Exercise 7: Changing Attributes with setAttribute
 
@@ -104,6 +129,9 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+let img=document.querySelector("#main-image");
+img.setAttribute("src", "image2.png");
 
 /*
 Exercise 8: Adding an Event Listener
@@ -120,6 +148,9 @@ placeholder = `Delete this
 									code 
 									here`;
 
+// let btn=document.querySelector("#alert-button");
+// btn.onclick= () => {alert("Button Clicked!")};									
+									
 /*
 Exercise 9: Removing an Event Listener
 
@@ -140,6 +171,21 @@ placeholder = `Delete this
 									code 
 									here`;
 
+
+let btn=document.querySelector("#alert-button");
+btn.addEventListener("click", myAlert);
+																		
+function myAlert() {
+alert("Button Clicked!");
+setTimeout(() => { 
+	console.log("Removed event listener")
+	btn.removeEventListener(
+		"click",
+		myAlert
+	);
+	}, 5000)
+};				  
+
 /*
 Exercise 10: Handling Keyboard Events
 
@@ -154,6 +200,13 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+// document.addEventListener(
+// 	"keydown",
+// 	(e) => {
+// 		console.log(`${e.key} has been pressed`)
+// 	}
+// );								
 
 /*
 Exercise 11: Event Propagation
@@ -174,6 +227,19 @@ placeholder = `Delete this
 									code 
 									here`;
 
+// let colorBtn = document.querySelector("#color-button");
+// colorBtn.addEventListener(
+// 	"click",
+// 	(e) => {console.log(`Color button clicked, origin: ${e.target}`)}
+// );
+
+// let interactiveSection= document.querySelector("#interactive")
+// interactiveSection.addEventListener(
+// 	"click",
+// 	(e) => {console.log(`Interactive section clicked, origin: ${e.target}`)}
+// );
+
+
 /*
 Exercise 12: Stopping Event Propagation
 
@@ -188,6 +254,20 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+// let colorBtn = document.querySelector("#color-button");
+// colorBtn.addEventListener(
+// 	"click",
+// 	(e) => {
+// 		console.log(`Color button clicked, origin: ${e.target}`),
+// 		e.stopPropagation()},
+// );
+
+// let interactiveSection= document.querySelector("#interactive")
+// interactiveSection.addEventListener(
+// 	"click",
+// 	(e) => {console.log(`Interactive section clicked, origin: ${e.target}`)} //Not logged
+// );	
 
 /*
 Exercise 13: Using console.log for Debugging
@@ -204,6 +284,15 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+									
+// let colorBtn = document.querySelector("#color-button");
+// colorBtn.addEventListener(
+// 	"click",
+// 	(e) => {
+// 		console.log(`Background color of button ${colorBtn.style.backgroundColor}`),
+// 		colorBtn.setAttribute("style", "background-color: lightgreen")},
+// );
+									
 
 /*
 Exercise 14: Creating and Appending New Elements
@@ -220,6 +309,11 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let listItem = document.createElement("li");
+listItem.innerHTML="Item 4";
+let unorderedList = document.querySelector("#item-list");
+unorderedList.appendChild(listItem);
+
 /*
 Exercise 15: Removing Elements from the DOM
 
@@ -233,6 +327,10 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+let el = document.querySelector("#item-list").firstElementChild;
+
+el.remove();
 
 /*
 Exercise 16: Using classList.add
@@ -249,6 +347,9 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let contentP = document.querySelector("#content p");
+contentP.classList.add("highlight");
+
 /*
 Exercise 17: Using classList.toggle
 
@@ -263,6 +364,14 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+let colorBtn = document.querySelector("#color-button");
+colorBtn.addEventListener(
+	"click",
+	(e) => {
+		console.log(`Class Active`),
+		colorBtn.classList.toggle("active")},
+	);								
 
 /*
 Exercise 18: Preventing Default Behavior
@@ -279,6 +388,16 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let form = document.querySelector("#input-form");
+form.addEventListener(
+	"submit",
+	(e) => {
+	e.preventDefault();
+	let input = document.querySelector("#input-text").value;
+	console.log(`Form input submitted: ${input}`);
+	}
+);
+
 /*
 Exercise 19: Simple Drag and Drop
 
@@ -293,6 +412,34 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+// let dragSource = document.querySelector("#drag-source");
+// let dropTarget = document.querySelector("#drop-target")
+									
+// dragSource.setAttribute("draggable", "true");
+									
+// dragSource.addEventListener(
+// 	"dragstart",
+// 	(e) => e.dataTransfer.setData("text/plain", e.target.id)
+// );
+									
+// dropTarget.addEventListener(
+// 	"dragover",
+// 	(e) => e.preventDefault()
+// );
+
+// dropTarget.addEventListener(
+// 	"drageneter",
+// 	(e) => e.preventDefault()
+// );
+
+// dropTarget.addEventListener(
+// 	"drop",
+// 	(e) => { e.preventDefault()
+// 		let droppedData = e.dataTransfer.getData("text/plain");
+// 		let itemDropped = document.getElementById(droppedData);
+// 		dropTarget.appendChild(itemDropped);
+// 	}
+// );								
 
 /*
 Exercise 20: Using dataTransfer in Drag and Drop
@@ -311,6 +458,38 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let dragSource = document.querySelector("#drag-source");
+let dropTarget = document.querySelector("#drop-target")
+let firstName = "Hannah"
+									
+dragSource.setAttribute("draggable", "true");
+									
+dragSource.addEventListener(
+	"dragstart",
+	(e) => e.dataTransfer.setData("text/plain", firstName)
+);
+									
+dropTarget.addEventListener(
+	"dragover",
+	(e) => e.preventDefault()
+);
+
+dropTarget.addEventListener(
+	"drageneter",
+	(e) => e.preventDefault()
+);
+
+dropTarget.addEventListener(
+	"drop",
+	(e) => { e.preventDefault()
+		let data = e.dataTransfer.getData("text/plain");
+		let p = document.createElement("p");
+		p.innerHTML=data;
+		dropTarget.appendChild(p);
+		console.log(dropTarget);
+	}
+);												
+
 /*
 Exercise 21: Cloning Nodes
 
@@ -325,6 +504,10 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+let mainTitle = document.querySelector("#main-title");
+let clone = mainTitle.cloneNode(true);
+document.querySelector("footer").appendChild(clone);document.querySelector("footer").appendChild(clone)
 
 /*
 Exercise 22: Modifying Styles with JavaScript
@@ -341,6 +524,17 @@ placeholder = `Delete this
 									code 
 									here`;
 
+let header = document.querySelector("header");
+let body = document.querySelector("body");
+header.addEventListener(
+	"mouseenter",
+	(e) => body.setAttribute("style","background-color: lightblue")
+);
+header.addEventListener(
+	"mouseleave",
+	(e) => body.setAttribute("style","background-color: null")
+);
+
 /*
 Exercise 23: Debouncing Function Calls
 
@@ -356,6 +550,26 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+									window.addEventListener(
+	"resize",
+	debounce(logWidth)
+);
+
+function debounce (callback) {
+	let timer;
+	return function() {
+	clearTimeout(timer);
+	timer = setTimeout(() => {
+		callback()
+	}, 500);
+}
+};
+
+function logWidth () {
+	console.log(`End of resizing: ${window.innerWidth} x ${window.innerHeight}`)
+};
+
 
 /*
 Exercise 24: Optimizing DOM Manipulations
@@ -374,6 +588,24 @@ placeholder = `Delete this
 									code 
 									here`;
 
+									let docFrag = document.createDocumentFragment()
+									function addtoDocFrag (i) {
+										if (i > 100) {
+											return;
+										} else {
+										let item = document.createElement("li");
+										item.innerHTML=`Item ${i}`;
+										item.setAttribute("id", `item${i}`);
+										docFrag.appendChild(item);
+										i++;
+										addtoDocFrag(i);
+									}
+									};
+									
+									addtoDocFrag(5);
+									document.querySelector("#item-list").appendChild(docFrag);
+									
+
 /*
 Exercise 25: Using Event Delegation
 
@@ -389,3 +621,9 @@ placeholder = `Delete this
 									and 
 									code 
 									here`;
+
+let list = document.querySelector("#item-list");
+list.addEventListener(
+	"click",
+	(e) => console.log(e.target.textContent)
+)
